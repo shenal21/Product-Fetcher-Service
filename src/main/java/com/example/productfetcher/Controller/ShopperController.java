@@ -36,7 +36,7 @@ public class ShopperController {
         return productService.saveProduct(product);
     }
 
-    //Internal shopper-products controller - used persist shopper-products.
+    //Internal shopper-products controller - used to persist shopper-products.
     @PostMapping("api/internal/shopper-products")
     public void saveShopper(@RequestBody Shopper shopper) {
         List<ShopperProduct> shelf = shopper.getShelf();
