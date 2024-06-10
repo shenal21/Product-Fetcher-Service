@@ -1,4 +1,4 @@
-# Product-fetcher-Service
+# Product-Fetcher-Service
 This is a simple Spring Boot application that provides REST APIs for managing and getting shopper-products and product metadata. 
 The application uses JPA for database interactions and supports auto-generated entities. 
 
