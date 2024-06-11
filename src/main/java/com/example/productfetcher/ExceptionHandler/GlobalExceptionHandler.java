@@ -8,6 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.Set;
+
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+
 //Global Exception Handler to handle exceptions globally.
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -43,6 +48,22 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponse> handleConstraintViolationExceptions(ConstraintViolationException ex) {
+        Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
+        StringBuilder errorMessageBuilder = new StringBuilder("Validation failed: ");
+        for (ConstraintViolation<?> violation : violations) {
+            errorMessageBuilder.append(violation.getMessage()).append("; ");
+        }
+
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        errorResponse.setMessage(errorMessageBuilder.toString());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
 
 
 }

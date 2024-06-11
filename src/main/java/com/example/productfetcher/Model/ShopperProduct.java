@@ -3,6 +3,7 @@ package com.example.productfetcher.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -22,6 +23,7 @@ public class ShopperProduct {
     @JoinColumn(name = "productId")
     private Product product;
 
-    private float relevancyScore;
+    @NotNull(message = "relevencyScore cannot be null")
+    private Float relevancyScore;
 
 }

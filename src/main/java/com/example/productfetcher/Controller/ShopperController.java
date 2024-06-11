@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping
@@ -36,7 +37,7 @@ public class ShopperController {
 
     //Internal shopper-products controller - used to persist shopper-products.
     @PostMapping("api/internal/shopper-products")
-    public void saveShopper(@RequestBody Shopper shopper) {
+    public void saveShopper(@Valid @RequestBody Shopper shopper) {
         List<ShopperProduct> shelf = shopper.getShelf();
         for (ShopperProduct shopperProduct : shelf) {
             Product product = productService.getProductById(shopperProduct.getProduct().getProductId()).orElse(null);
