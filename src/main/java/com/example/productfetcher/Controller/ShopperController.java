@@ -1,6 +1,5 @@
 package com.example.productfetcher.Controller;
 
-import com.example.productfetcher.Exceptions.CustomDataAccessException;
 import com.example.productfetcher.Model.Product;
 import com.example.productfetcher.Model.Shopper;
 import com.example.productfetcher.Model.ShopperProduct;
@@ -8,7 +7,6 @@ import com.example.productfetcher.Service.ProductService;
 import com.example.productfetcher.Service.ShopperService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

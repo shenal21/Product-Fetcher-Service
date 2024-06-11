@@ -1,11 +1,9 @@
 package com.example.productfetcher.Service;
 
-import com.example.productfetcher.Exceptions.CustomDataAccessException;
-import com.example.productfetcher.Exceptions.DuplicateShopperProductException;
+import com.example.productfetcher.Exceptions.CustomApiException;
 import com.example.productfetcher.Model.Product;
 import com.example.productfetcher.Model.Shopper;
 import com.example.productfetcher.Model.ShopperProduct;
-import com.example.productfetcher.Repository.ProductRepository;
 import com.example.productfetcher.Repository.ShopperProductRepository;
 import com.example.productfetcher.Repository.ShopperRepository;
 
@@ -37,14 +35,14 @@ public class ShopperService {
             Optional<Product> product = productService.getProductById(productId);
 
             if (product.isEmpty()) {
-                throw CustomDataAccessException.noProductsFoundException("Product not found with ID: " + productId);
+                throw new CustomApiException.NoProductsFoundException("Product not found with ID: " + productId);
             }
 
 
             // Check if a shopper-product entry already exists in the Db for the combination of shopperId and productId
             boolean exists = shopperProductRepository.existsByShopper_ShopperIdAndProduct_ProductId(shopperId, productId);
             if (exists) {
-                throw new DuplicateShopperProductException("Duplicate shopper product entry found for shopper ID: " +
+                throw new CustomApiException.DuplicateShopperProductException("Duplicate shopper product entry found for shopper ID: " +
                     shopperId + " and product ID: " + productId);
             }
         }
@@ -60,9 +58,9 @@ public class ShopperService {
 
     public List<ShopperProduct> getShopperProducts(String shopperId, String category, String brand, int limit) {
 
-        //Validate the limit variable: allowed MAX value is 100.
+        //Validate the limit filter: allowed MAX value is 100.
         if (limit > 100) {
-            throw new IllegalArgumentException("Limiter cannot exceed 100");
+            throw new CustomApiException.MaxLimiterException("Limit filter cannot exceed 100.");
         }
 
         //Pagination to improve performance to handle large data sets.
@@ -82,7 +80,7 @@ public class ShopperService {
         }
 
         if (products.isEmpty()) {
-            throw CustomDataAccessException.noProductsFoundException("No products found for the specified filter criteria.");
+            throw new CustomApiException.NoProductsFoundException("No products found for the specified filter criteria.");
         }
         return products;
     }
