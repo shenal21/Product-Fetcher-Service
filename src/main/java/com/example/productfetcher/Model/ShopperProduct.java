@@ -8,6 +8,10 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(
+    name = "shopper_product",
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"shopper_id", "product_id"})}
+)
 public class ShopperProduct {
 
     @Id

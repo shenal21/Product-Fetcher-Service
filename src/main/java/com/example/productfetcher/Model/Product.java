@@ -1,6 +1,8 @@
 package com.example.productfetcher.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -12,6 +14,8 @@ import lombok.Data;
 })
 public class Product {
     @Id
+    @NotNull(message = "Id cannot be null")
+    @NotBlank(message = "Id cannot be blank")
     private String productId;
 
     @Column(nullable = false)

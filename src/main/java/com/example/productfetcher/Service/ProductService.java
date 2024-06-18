@@ -20,7 +20,7 @@ public class ProductService {
         return productRepository.findById(productId);
     }
 
-    public ResponseEntity<String> saveProduct(Product product) {
+    public ResponseEntity<Object> saveProduct(Product product) {
         String productId = product.getProductId();
         Optional<Product> existingProductOptional = getProductById(productId);
 
